@@ -21,27 +21,32 @@ bool check(int a[20005],int n)
 			tmp[i]=-1;
 		}
 	}
-	for(int i=0;i<=n;i++)
+	int p,q;
+	p=q=1;
+	while(p<=n)
 	{
-		if(tmp[i]!=-1)
+		if(tmp[p-1]!=-1)
 		{
+			p++;
+			q=p;
 			continue;
 		}
-		i++;
-		while(tmp[i]==0)
+		while(tmp[q]==0)
 		{
-			i++;
+			q++;
 		}
-		if(tmp[i]==1)
+		if(tmp[q]==1)
 		{
 			ans++;
+			p=q+1;
+			q=p;
 		}
 		else
 		{
-			i--;
+			p=q=q+1;
 		}
 	}
-	return ans==1 ? true :false;
+	return ans==1;
 }
 int main()
 {
