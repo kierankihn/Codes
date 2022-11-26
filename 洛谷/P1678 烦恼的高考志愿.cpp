@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#define cin input
-#define cout output
 using namespace std;
 int search(int* A,int m,int k)
 {
@@ -21,8 +19,6 @@ int search(int* A,int m,int k)
 }
 int main()
 {
-	ifstream input("P1678_1.in");
-	ofstream output("P1678_1.ans");
 	int m,n;
 	long long ans=0;
 	int school[100005],stu[100005];
