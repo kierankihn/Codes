@@ -2,7 +2,6 @@
 using namespace std;
 bool check(int a[20005],int n)
 {
-	int ans=0;
 	int tmp[20005];
 	tmp[0]=-1;
 	tmp[n]=1;
@@ -21,32 +20,19 @@ bool check(int a[20005],int n)
 			tmp[i]=-1;
 		}
 	}
-	int p,q;
-	p=q=1;
-	while(p<=n)
+	bool isok=false;
+	for(int i=0;i<=n+1;i++)
 	{
-		if(tmp[p-1]!=-1)
+		if(tmp[i-1]==1)
 		{
-			p++;
-			q=p;
-			continue;
+			isok=true;
 		}
-		while(tmp[q]==0)
+		if(tmp[i-1]==-1 && isok)
 		{
-			q++;
-		}
-		if(tmp[q]==1)
-		{
-			ans++;
-			p=q+1;
-			q=p;
-		}
-		else
-		{
-			p=q=q+1;
+			return false;
 		}
 	}
-	return ans==1;
+	return true;
 }
 int main()
 {
