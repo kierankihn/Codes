@@ -1,59 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MAXN=20;
+const int MAXN = 20;
 int n;
-int mp[MAXN+5][MAXN+5];
-int dp[MAXN+5];
-int vis[MAXN+5];
+int mp[MAXN + 5][MAXN + 5];
+int dp[MAXN + 5];
+int vis[MAXN + 5];
 int solve(int x)
 {
-	int ans=-2;
-	if(dp[x]!=-1)
+	int ans = -2;
+	if (dp[x] != -1)
 	{
-		ans=dp[x];
+		ans = dp[x];
 	}
 	else
 	{
-		int beforei=0;
-		for(int i=1;i<=n;i++)
+		for (int i = 1; i <= n; i++)
 		{
-			if(mp[i][x])
+			if (mp[x][i])
 			{
-				if((ans==-2)||(ans>solve(i)+mp[i][x]))
+				if ((ans == -2) || (ans > solve(i) + mp[x][i]))
 				{
-					vis[beforei]=0;
-					vis[i]=1;
-					ans=solve(i)+mp[i][x];
-					beforei=i;
+					ans = solve(i) + mp[x][i];
 				}
 			}
 		}
 	}
-	return dp[x]=ans;
+	return dp[x] = ans;
+}
+void print(int i)
+{
+	cout << i << " ";
+	for (int j = 1; j <= n; j++)
+	{
+		if (mp[i][j] && (mp[i][j] + dp[j] == dp[i]))
+		{
+			print(j);
+		}
+	}
+	return;
 }
 int main()
 {
-	memset(mp,0,sizeof(mp));
-	memset(vis,0,sizeof(vis));
-	memset(dp,-1,sizeof(dp));
-	dp[1]=0;
-	cin>>n;
-	vis[n]=true;
-	for(int i=1;i<=n;i++)
+	memset(mp, 0, sizeof(mp));
+	memset(vis, 0, sizeof(vis));
+	memset(dp, -1, sizeof(dp));
+	cin >> n;
+	dp[n] = 0;
+	vis[1] = vis[n] = true;
+	for (int i = 1; i <= n; i++)
 	{
-		for(int j=1;j<=n;j++)
+		for (int j = 1; j <= n; j++)
 		{
-			cin>>mp[i][j];
+			cin >> mp[i][j];
 		}
 	}
-	cout<<solve(n)<<endl;
-	for(int i=1;i<=n;i++)
-	{
-		if(vis[i])
-		{
-			cout<<i<<" ";
-		}
-	}
-	cout<<endl;
+	cout << "minlong=" << solve(1) << endl;
+	print(1);
+	cout << endl;
 	return 0;
 }
