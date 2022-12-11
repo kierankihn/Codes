@@ -15,11 +15,11 @@ bool check(int l)
 int main()
 {
 	cin>>n>>k;
-	len[0]=1e8+1;
+	len[0]=-1;
 	for(int i=1;i<=n;i++)
 	{
 		cin>>len[i];
-		len[0]=min(len[0],len[i]);
+		len[0]=max(len[0],len[i]);
 	}
 	int l=1,r=len[0];
 	int ans=0;
