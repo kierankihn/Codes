@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 long long ksm(long long a,long long b,long long c)
 {
