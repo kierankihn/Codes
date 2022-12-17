@@ -6,6 +6,8 @@
 *.lo
 *.o
 *.obj
+*.pdb
+*.ilk
 
 # Precompiled Headers
 *.gch
@@ -38,5 +40,3 @@
 
 #Visual Studio Code files
 /.vscode
-*.pdb
-*.ilk
