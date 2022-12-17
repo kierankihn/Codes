@@ -3,7 +3,6 @@ using namespace std;
 const int MAXN=5000;
 int n;
 int ans=0;
-//int pos[MAXN+5][2];
 vector<vector<int> >pos;
 int dp[MAXN+5];
 bool cmp(vector<int> a,vector<int> b)
