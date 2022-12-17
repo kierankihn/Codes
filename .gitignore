@@ -35,3 +35,6 @@
 *.in
 *.out
 *.ans
+
+#Visual Studio Code files
+/.vscode
