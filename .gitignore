@@ -38,3 +38,5 @@
 
 #Visual Studio Code files
 /.vscode
+*.pdb
+*.ilk
