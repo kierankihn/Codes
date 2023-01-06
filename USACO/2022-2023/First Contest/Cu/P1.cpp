@@ -22,6 +22,5 @@ int main()
 		}
 	}
 	cout << ans << " " << p << endl;
-
 	return 0;
 }
