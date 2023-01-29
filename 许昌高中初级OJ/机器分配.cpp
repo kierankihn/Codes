@@ -5,7 +5,8 @@ const int MAXN = 10;
 int n, m;
 int gain[MAXN + 5][MAXM + 5];
 int dp[MAXN + 5][MAXN + 5];
-int ans[MAXN + 5];
+int ans[MAXN + 5][MAXM + 5];
+int output[MAXN + 5];
 int solve(int x, int y)
 {
     int res = -1;
@@ -24,7 +25,7 @@ int solve(int x, int y)
             if (res < solve(x - 1, y - i) + gain[x][i])
             {
                 res = solve(x - 1, y - i) + gain[x][i];
-                ans[x] = i;
+                ans[x][y] = i;
             }
         }
     }
@@ -43,9 +44,16 @@ int main()
         }
     }
     cout << solve(n, m) << endl;
+    int tmp = m;
+    for (int i = n; i >= 1; i--)
+    {
+        output[i] = ans[i][tmp];
+        // cout << i << " " << ans[i][tmp] << endl;
+        tmp = tmp - ans[i][tmp];
+    }
     for (int i = 1; i <= n; i++)
     {
-        cout << i << " " << ans[i] << endl;
+        cout << i << " " << output[i] << endl;
     }
     return 0;
 }
