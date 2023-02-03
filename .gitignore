@@ -47,3 +47,12 @@ tempCodeRunnerFile.cpp
 
 # Competitive Companion files
 *.prob
+
+# Test files
+/Test
+
+# Debug files
+*.dSYM
+
+# Unknown files
+.DS_Store
