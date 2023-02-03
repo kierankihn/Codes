@@ -50,5 +50,6 @@ int main()
     cin >> input;
     solve(input, 1);
     print(1);
+    cout << endl;
     return 0;
 }
