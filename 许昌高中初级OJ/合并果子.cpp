@@ -3,7 +3,7 @@ using namespace std;
 const int MAXN = 114514;
 int n;
 int ans = 0;
-priority_queue<int,vector<int>,greater<int> > nums;
+priority_queue<int,vector<int>,greater<int>> nums;
 int main()
 {
     cin >> n;
