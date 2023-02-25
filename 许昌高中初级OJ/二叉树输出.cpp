@@ -37,11 +37,11 @@ int solve(string a, string b, int isok)
     }
     if (b.find(a[0]) > 0)
     {
-        solve(la, lb, 1);
+        solve(la, lb, 1 && isok);
     }
     if (b.size() - b.find(a[0]) - 1 > 0)
     {
-        solve(ra, rb, 1);
+        solve(ra, rb, 1 && isok);
     }
     return k;
 }
