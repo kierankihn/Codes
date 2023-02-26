@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 1e4;
+const int MAXN = 100;
 int n, m;
 int vis[MAXN + 5][MAXN + 5];
 int graph[MAXN + 5][MAXN + 5];
@@ -15,7 +15,7 @@ bool dfs(int x, int cnt)
     }
     for (int i = 1; i <= n; i++)
     {
-        if (graph[x][i] && (!vis[x][i]))
+        if (graph[x][i] && (!vis[x][i]) && (!vis[i][x]))
         {
             vis[i][x] = vis[x][i] = 1;
             if (!isok)
