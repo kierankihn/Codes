@@ -14,7 +14,7 @@ int main()
         for (int j = 1; j <= n; j++)
         {
             cin >> tmp;
-            if(tmp=="-")
+            if (tmp == "-")
             {
                 mp[i][j] = INF;
             }
