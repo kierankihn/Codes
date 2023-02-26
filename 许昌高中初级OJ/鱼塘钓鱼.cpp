@@ -41,7 +41,7 @@ int main()
         {
             dl.push(fish[j]);
         }
-        while (t_ && (!dl.empty()))
+        while ((t_ > 0) && (!dl.empty()))
         {
             struct Fish tmp = dl.top();
             dl.pop();
