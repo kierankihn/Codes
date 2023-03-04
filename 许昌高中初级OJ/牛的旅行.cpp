@@ -6,10 +6,15 @@ int n;
 double ans;
 int pos[MAXN + 5][3];
 int maxpos[MAXN + 5];
+double maxlen[MAXN + 5];
 double mp[MAXN + 5][MAXN + 5];
 vector<set<int>> lzh;
 int main()
 {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
     memset(mp, 127, sizeof(mp));
     INF = mp[0][0];
     ans = INF;
@@ -73,6 +78,13 @@ int main()
             mp[i][0] = max(mp[i][0], mp[i][*j]);
         }
     }
+    for (unsigned int i = 0; i < lzh.size(); i++)
+    {
+        for (set<int>::iterator j = lzh[i].begin(); j != lzh[i].end(); j++)
+        {
+            maxlen[i] = max(maxlen[i], mp[*j][0]);
+        }
+    }
     for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= n; j++)
@@ -81,12 +93,11 @@ int main()
             {
                 continue;
             }
-            ans = min(ans, mp[i][0] + mp[j][0] + sqrt(pow(abs(pos[i][1] - pos[j][1]), 2) + pow(abs(pos[i][2] - pos[j][2]), 2)));
+            double tmp = mp[i][0] + mp[j][0] + sqrt(pow(abs(pos[i][1] - pos[j][1]), 2) + pow(abs(pos[i][2] - pos[j][2]), 2));
+            tmp = max(tmp, maxlen[pos[i][0]]);
+            tmp = max(tmp, maxlen[pos[j][0]]);
+            ans = min(ans, tmp);
         }
-    }
-    if (abs(ans - 22693.9) < 1)
-    {
-        ans = 39796.392691;
     }
     cout << fixed << setprecision(6) << ans << endl;
     return 0;
