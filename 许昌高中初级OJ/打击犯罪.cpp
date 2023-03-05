@@ -16,7 +16,7 @@ void init(int k)
 }
 int find(int x)
 {
-    while (fa[x] != x)
+    if (fa[x] != x)
     {
         fa[x] = find(fa[x]);
     }
