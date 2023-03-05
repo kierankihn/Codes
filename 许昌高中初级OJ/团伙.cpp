@@ -4,7 +4,7 @@ const int MAXN = 1000;
 int n, m;
 int ans = 0;
 int fa[MAXN + 5];
-set<int> fu[MAXN + 5];
+int fu[MAXN + 5];
 int find(int x)
 {
     if (x != fa[x])
@@ -33,47 +33,29 @@ int main()
     {
         int p, x, y;
         cin >> p >> x >> y;
-        if (p == 1)
+        if (p == 0)
         {
             unio(x, y);
-            for (set<int>::iterator j = fu[x].begin(); j != fu[x].end(); j++)
-            {
-                fu[y].insert(*j);
-                fu[*j].insert(x);
-            }
-            for (set<int>::iterator j = fu[y].begin(); j != fu[y].end(); j++)
-            {
-                fu[x].insert(*j);
-                fu[*j].insert(y);
-            }
         }
         else
         {
-            fu[x].insert(y);
-            fu[y].insert(x);
-            for (set<int>::iterator j = fu[x].begin(); j != fu[x].end(); j++)
+            if (fu[x] != 0)
             {
-                if (!fu[x].count(*j))
-                {
-                    unio(x, *j);
-                }
+                unio(fu[x], y);
             }
-            for (set<int>::iterator j = fu[y].begin(); j != fu[y].end(); j++)
+            if (fu[y] != 0)
             {
-                if (!fu[y].count(*j))
-                {
-                    unio(*j, y);
-                }
+                unio(x, fu[y]);
             }
+            fu[y] = x;
+            fu[x] = y;
         }
     }
-    set<int> tmp;
     for (int i = 1; i <= n; i++)
     {
-        if (!tmp.count(find(i)))
+        if (fa[i] == i)
         {
             ans++;
-            tmp.insert(find(i));
         }
     }
     cout << ans << endl;
