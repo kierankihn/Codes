@@ -53,6 +53,7 @@ tempCodeRunnerFile.cpp
 
 # Debug files
 *.dSYM
+/DEBUG
 
 # Unknown files
 .DS_Store
