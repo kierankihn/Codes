@@ -3,6 +3,7 @@ using namespace std;
 const int MAXN = 1000000;
 int n, q;
 int a[MAXN + 5];
+int c[MAXN + 5];
 int s[MAXN + 5];
 int d[MAXN + 5];
 inline int readInt()
@@ -65,29 +66,23 @@ int query(int l, int r)
 }
 int main()
 {
-    // n = readInt();
-    // q = readInt();
-    cin >> n >> q;
+    n = readInt();
+    q = readInt();
     for (int i = 1; i <= n; i++)
     {
-        int x;
-        cin >> x;
-        update(i, i, x);
-        // update(i, i, readInt());
+        a[i] = readInt();
+        c[i] = c[i - 1] + a[i];
     }
     for (int i = 1; i <= q; i++)
     {
         if (readInt() == 1)
         {
-            int x, y, a;
-            cin >> x >> y >> a;
-            update(x, y, a);
+            update(readInt(), readInt(), readInt());
         }
         else
         {
-            int x, y;
-            cin >> x >> y;
-            cout << query(x, y) << endl;
+            int l = readInt(), r = readInt();
+            cout << c[r] - c[l - 1] + query(l, r) << endl;
         }
     }
     return 0;
