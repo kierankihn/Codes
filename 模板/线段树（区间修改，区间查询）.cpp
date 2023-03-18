@@ -43,7 +43,7 @@ void build(int o, int l, int r)
 {
     if (l == r)
     {
-        sum[o] = a[o];
+        sum[o] = a[l];
         return;
     }
     int mid = (l + r) / 2;
@@ -92,7 +92,7 @@ void update(int o, int ql, int qr, int l, int r, int v)
     int mid = (l + r) / 2;
     if (ql <= l && r <= qr)
     {
-        sum[o] += v * (r - l + 1);
+        sum[o] += (long long)v * (r - l + 1);
         tag[o] += v;
         return;
     }
@@ -118,9 +118,8 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         a[i] = readInt();
-        update(i, i, a[i]);
     }
-    // build(1, 1, n);
+    build(1, 1, n);
     for (int i = 1; i <= q; i++)
     {
         // if (readInt() == 1)
