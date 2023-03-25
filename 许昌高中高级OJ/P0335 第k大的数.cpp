@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 3e5;
-int n, m;
-int nums[MAXN+785];
-int count[MAXN+5];
+const int MAXN = 1e6;
+int n, q;
+int c[MAXN + 5];
+int nums[MAXN + 785];
 long long sum[MAXN * 4 + 5];
 inline int readInt()
 {
@@ -38,17 +38,17 @@ void write(long long x)
     putchar(x % 10 + '0');
     return;
 }
-void build(int o,int l,int r)
+void build(int o, int l, int r)
 {
-	if(l==r)
-	{
-		sum[o]=count[l];
-		return;
-	}
-	int mid=(l+r)/2;
-	build(o*2,l,mid);
-	build(o*2+1,mid+1,r);
-	sum[o]=sum[o*2]+sum[o*2+1];
+    if (l == r)
+    {
+        sum[o] = c[l];
+        return;
+    }
+    int mid = (l + r) / 2;
+    build(o * 2, l, mid);
+    build(o * 2 + 1, mid + 1, r);
+    sum[o] = sum[o * 2] + sum[o * 2 + 1];
 }
 void update(int o, int l, int r, int pos, int v)
 {
@@ -73,7 +73,7 @@ void update(int o, int l, int r, int pos, int v)
 }
 void update(int pos, int v)
 {
-    update(1, 1, n, pos, v);
+    update(1, 1, MAXN, pos, v);
 }
 long long query(int o, int ql, int qr, int l, int r)
 {
@@ -98,9 +98,61 @@ long long query(int o, int ql, int qr, int l, int r)
 }
 long long query(int l, int r)
 {
-    return query(1, l, r, 1, n);
+    return query(1, l, r, 1, MAXN);
+}
+int findx(int o, int l, int r, int pos)
+{
+    if (l == r)
+    {
+        return l;
+    }
+    int mid = (l + r) / 2;
+    if (pos <= sum[o * 2])
+    {
+        return findx(o * 2, l, mid, pos);
+    }
+    else
+    {
+        return findx(o * 2 + 1, mid + 1, r, pos - sum[o * 2]);
+    }
+    return -1;
+}
+int findx(int pos)
+{
+    return findx(1, 1, MAXN, pos);
 }
 int main()
 {
-	return 0;
+    n = readInt();
+    q = readInt();
+    for (int i = 1; i <= n; i++)
+    {
+        nums[i] = readInt();
+        c[nums[i]]++;
+    }
+    build(1, 1, MAXN);
+    for (int i = 1; i <= q; i++)
+    {
+        int k = readInt();
+        if (k == 1)
+        {
+            int pos = readInt();
+            write(findx(pos));
+            putchar('\n');
+            // int l,r;
+            // l = readInt();
+            // r = readInt();
+            // write(query(l, r));
+        }
+        else
+        {
+            int pos, x;
+            pos = readInt();
+            x = readInt();
+            update(nums[pos], -1);
+            update(x, 1);
+            nums[pos] = x;
+        }
+    }
+    return 0;
 }
