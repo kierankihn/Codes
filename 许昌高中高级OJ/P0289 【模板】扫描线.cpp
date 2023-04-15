@@ -129,7 +129,7 @@ int main()
         edge[i].y = newy;
     }
     sort(edge + 1, edge + 2 * n + 1);
-    for (int i = 0; i < n << 1; i++)
+    for (int i = 1; i <= (n << 1); i++)
     {
         update(1, 1, m, edge[i].y.first, edge[i].y.second, edge[i].k);
         ans += node[1].cnt * (edge[i + 1].x - edge[i].x);
