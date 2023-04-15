@@ -20,7 +20,7 @@ inline int readInt()
     }
     return x * f;
 }
-inline void write(int x)
+inline void write(long long x)
 {
     if (x < 0)
     {
@@ -37,7 +37,7 @@ inline void write(int x)
 struct Node
 {
     int cnt;
-    int len;
+    unsigned long long len;
     Node() : cnt(0), len(0)
     {
         // nothing
@@ -67,10 +67,10 @@ struct Edge
 };
 int n;
 int m;
-int ans = 0;
+unsigned long long ans = 0;
 Node node[MAXN * 16];
-int rk[MAXN * 2];
-int raw[MAXN * 2];
+unsigned long long rk[MAXN * 2];
+unsigned long long raw[MAXN * 2];
 Edge edge[MAXN * 2];
 void updatelen(int o, int l, int r)
 {
@@ -112,18 +112,18 @@ int main()
         y.first = readInt();
         x.second = readInt();
         y.second = readInt();
-        rk[i * 2] = y.first;
-        rk[i * 2 + 1] = y.second;
-        edge[i * 2] = (Edge(x.first, y.first, y.second, 1));
-        edge[i * 2 + 1] = (Edge(x.second, y.first, y.second, -1));
+        rk[i * 2 - 1] = y.first;
+        rk[i * 2] = y.second;
+        edge[i * 2 - 1] = (Edge(x.first, y.first, y.second, 1));
+        edge[i * 2] = (Edge(x.second, y.first, y.second, -1));
     }
     sort(rk + 1, rk + 2 * n + 1);
-    m = unique(rk + 1, rk + 2 * n + 1) - rk + 1;
+    m = unique(rk + 1, rk + 2 * n + 1) - rk - 1;
     for (int i = 1; i <= 2 * n; i++)
     {
         pair<int, int> newy;
-        newy.first = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.first) - rk + 1;
-        newy.second = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.second) - rk + 1;
+        newy.first = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.first) - rk;
+        newy.second = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.second) - rk;
         raw[newy.first] = edge[i].y.first;
         raw[newy.second] = edge[i].y.second;
         edge[i].y = newy;
@@ -131,10 +131,8 @@ int main()
     sort(edge + 1, edge + 2 * n + 1);
     for (int i = 1; i <= (n << 1); i++)
     {
-        update(1, 1, m, edge[i].y.first, edge[i].y.second, edge[i].k);
-        ans += node[1].cnt * (edge[i + 1].x - edge[i].x);
-        write(node[1].cnt);
-        putchar(' ');
+        update(1, 1, m, edge[i].y.first, edge[i].y.second - 1, edge[i].k);
+        ans += (long long)node[1].len * (edge[i + 1].x - edge[i].x);
     }
     putchar('\n');
     write(ans);
