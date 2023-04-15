@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-const unsigned long long MAXN = 1e5 + 5;
+typedef unsigned long long ull;
+const ull MAXN = 1e5 + 5;
 inline int readInt()
 {
     int x = 0, f = 1;
@@ -22,10 +23,6 @@ inline int readInt()
 }
 inline void write(ull x)
 {
-    if (x < 0)
-    {
-        putchar('-'), x = -x;
-    }
     if (x > 9)
     {
         write(x / 10);
@@ -33,8 +30,6 @@ inline void write(ull x)
     putchar(x % 10 + '0');
     return;
 }
-
-typedef unsigned long long ull;
 struct Node
 {
     ull cnt;
@@ -135,7 +130,7 @@ int main()
     for (ull i = 1; i < (n << 1); i++)
     {
         update(1, 1, m, edge[i].y.first, edge[i].y.second - 1, edge[i].k);
-        ans += (long long)node[1].len * (edge[i + 1].x - edge[i].x);
+        ans += node[1].len * (edge[i + 1].x - edge[i].x);
     }
     putchar('\n');
     write(ans);
