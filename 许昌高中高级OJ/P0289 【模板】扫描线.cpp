@@ -48,6 +48,10 @@ struct Edge
     int x;
     pair<int, int> y;
     int k;
+    Edge() : x(0), y(pair<int, int>(0, 0)), k(0)
+    {
+        // nothing
+    }
     Edge(int x_, int y1_, int y2_, int k_) : x(x_), y(pair<int, int>(y1_, y2_)), k(k_)
     {
         // nothing
@@ -65,9 +69,9 @@ int n;
 int m;
 int ans = 0;
 Node node[MAXN * 16];
-vector<int> rk;
-vector<int> raw;
-vector<Edge> edge;
+int rk[MAXN * 2];
+int raw[MAXN * 2];
+Edge edge[MAXN * 2];
 void updatelen(int o, int l, int r)
 {
     if (node[o].cnt)
@@ -108,24 +112,23 @@ int main()
         y.first = readInt();
         x.second = readInt();
         y.second = readInt();
-        rk.push_back(y.first);
-        rk.push_back(y.second);
-        edge.push_back(Edge(x.first, y.first, y.second, 1));
-        edge.push_back(Edge(x.second, y.first, y.second, -1));
+        rk[i * 2] = y.first;
+        rk[i * 2 + 1] = y.second;
+        edge[i * 2] = (Edge(x.first, y.first, y.second, 1));
+        edge[i * 2 + 1] = (Edge(x.second, y.first, y.second, -1));
     }
-    sort(rk.begin(), rk.end());
-    m = unique(rk.begin(), rk.end()) - rk.begin();
-    raw.resize(m);
-    for (int i = 0; i < 2 * n; i++)
+    sort(rk + 1, rk + 2 * n + 1);
+    m = unique(rk + 1, rk + 2 * n + 1) - rk + 1;
+    for (int i = 1; i <= 2 * n; i++)
     {
         pair<int, int> newy;
-        newy.first = lower_bound(rk.begin(), rk.end(), edge[i].y.first) - rk.begin();
-        newy.second = lower_bound(rk.begin(), rk.end(), edge[i].y.second) - rk.begin();
+        newy.first = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.first) - rk + 1;
+        newy.second = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.second) - rk + 1;
         raw[newy.first] = edge[i].y.first;
         raw[newy.second] = edge[i].y.second;
         edge[i].y = newy;
     }
-    sort(edge.begin(), edge.end());
+    sort(edge + 1, edge + 2 * n + 1);
     for (int i = 0; i < n << 1; i++)
     {
         update(1, 1, m, edge[i].y.first, edge[i].y.second, edge[i].k);
