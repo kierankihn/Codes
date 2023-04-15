@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 1e5;
+const unsigned long long MAXN = 1e5 + 5;
 inline int readInt()
 {
     int x = 0, f = 1;
@@ -36,7 +36,7 @@ inline void write(long long x)
 
 struct Node
 {
-    int cnt;
+    unsigned long long cnt;
     unsigned long long len;
     Node() : cnt(0), len(0)
     {
@@ -45,14 +45,14 @@ struct Node
 };
 struct Edge
 {
-    int x;
-    pair<int, int> y;
-    int k;
-    Edge() : x(0), y(pair<int, int>(0, 0)), k(0)
+    unsigned long long x;
+    pair<unsigned long long, unsigned long long> y;
+    unsigned long long k;
+    Edge() : x(0), y(pair<unsigned long long, unsigned long long>(0, 0)), k(0)
     {
         // nothing
     }
-    Edge(int x_, int y1_, int y2_, int k_) : x(x_), y(pair<int, int>(y1_, y2_)), k(k_)
+    Edge(unsigned long long x_, unsigned long long y1_, unsigned long long y2_, unsigned long long k_) : x(x_), y(pair<unsigned long long, unsigned long long>(y1_, y2_)), k(k_)
     {
         // nothing
     }
@@ -65,14 +65,14 @@ struct Edge
         return x < a.x;
     }
 };
-int n;
-int m;
+unsigned long long n;
+unsigned long long m;
 unsigned long long ans = 0;
 Node node[MAXN * 16];
 unsigned long long rk[MAXN * 2];
 unsigned long long raw[MAXN * 2];
 Edge edge[MAXN * 2];
-void updatelen(int o, int l, int r)
+void updatelen(unsigned long long o, unsigned long long l, unsigned long long r)
 {
     if (node[o].cnt)
     {
@@ -83,7 +83,7 @@ void updatelen(int o, int l, int r)
         node[o].len = node[o * 2].len + node[o * 2 + 1].len;
     }
 }
-void update(int o, int l, int r, int ql, int qr, int val)
+void update(unsigned long long o, unsigned long long l, unsigned long long r, unsigned long long ql, unsigned long long qr, unsigned long long val)
 {
     if (ql <= l && r <= qr)
     {
@@ -91,7 +91,7 @@ void update(int o, int l, int r, int ql, int qr, int val)
         updatelen(o, l, r);
         return;
     }
-    int mid = (l + r) >> 1;
+    unsigned long long mid = (l + r) >> 1;
     if (mid >= ql)
     {
         update(o * 2, l, mid, ql, qr, val);
@@ -104,10 +104,12 @@ void update(int o, int l, int r, int ql, int qr, int val)
 }
 int main()
 {
+    memset(rk, 0, sizeof(rk));
+    memset(raw, 0, sizeof(raw));
     n = readInt();
-    for (int i = 1; i <= n; i++)
+    for (unsigned long long i = 1; i <= n; i++)
     {
-        pair<int, int> x, y;
+        pair<unsigned long long, unsigned long long> x, y;
         x.first = readInt();
         y.first = readInt();
         x.second = readInt();
@@ -119,9 +121,9 @@ int main()
     }
     sort(rk + 1, rk + 2 * n + 1);
     m = unique(rk + 1, rk + 2 * n + 1) - rk - 1;
-    for (int i = 1; i <= 2 * n; i++)
+    for (unsigned long long i = 1; i <= 2 * n; i++)
     {
-        pair<int, int> newy;
+        pair<unsigned long long, unsigned long long> newy;
         newy.first = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.first) - rk;
         newy.second = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.second) - rk;
         raw[newy.first] = edge[i].y.first;
@@ -129,7 +131,7 @@ int main()
         edge[i].y = newy;
     }
     sort(edge + 1, edge + 2 * n + 1);
-    for (int i = 1; i <= (n << 1); i++)
+    for (unsigned long long i = 1; i < (n << 1); i++)
     {
         update(1, 1, m, edge[i].y.first, edge[i].y.second - 1, edge[i].k);
         ans += (long long)node[1].len * (edge[i + 1].x - edge[i].x);
