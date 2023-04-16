@@ -120,8 +120,8 @@ int main()
     for (ull i = 1; i <= 2 * n; i++)
     {
         pair<ull, ull> newy;
-        newy.first = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.first) - rk;
-        newy.second = lower_bound(rk + 1, rk + 2 * n + 1, edge[i].y.second) - rk;
+        newy.first = lower_bound(rk + 1, rk + m + 1, edge[i].y.first) - rk;
+        newy.second = lower_bound(rk + 1, rk + m + 1, edge[i].y.second) - rk;
         raw[newy.first] = edge[i].y.first;
         raw[newy.second] = edge[i].y.second;
         edge[i].y = newy;
@@ -132,7 +132,6 @@ int main()
         update(1, 1, m, edge[i].y.first, edge[i].y.second - 1, edge[i].k);
         ans += node[1].len * (edge[i + 1].x - edge[i].x);
     }
-    putchar('\n');
     write(ans);
     putchar('\n');
     return 0;
