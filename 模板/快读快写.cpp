@@ -1,34 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
-inline int readInt()
+template <typename T> T read()
 {
-    int x = 0, f = 1;
-    char ch = getchar();
-    while (ch < '0' || ch > '9')
-    {
-        if (ch == '-')
-        {
-            f = -1;
-        }
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        x = x * 10 + ch - '0';
-        ch = getchar();
-    }
-    return x * f;
+	T res = 0, s = 1;
+	char ch;
+	while ((ch = getchar()) < '0' || ch > '9')    if (ch == '-')    s = -1;
+	while (ch >= '0' && ch <= '9')                res = res * 10 + ch - '0', ch = getchar();
+	return res * s;
 }
-void write(int x)
+template <typename T> void write(T x)
 {
-    if (x < 0)
-    {
-        putchar('-'), x = -x;
-    }
-    if (x > 9)
-    {
-        write(x / 10);
-    }
-    putchar(x % 10 + '0');
-    return;
+	if (x < 0)    putchar('-'), x = -x;
+	if (x > 9)    write(x / 10);
+	putchar((x % 10) + '0');
+}
+int main()
+{
+	int n;
+	n = read<int>();
+	for (int i = 1; i <= n; i++)
+	{
+		int x;
+		x = read<int>();
+		write(x);
+		putchar('\n');
+	}
+	return 0;
 }
