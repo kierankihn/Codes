@@ -4,41 +4,19 @@ const int MAXN = 1e6 + 5;
 int n, k;
 int nums[MAXN];
 deque<int> dl;
-template <typename T>
-T read()
+template <typename T> T read()
 {
-	T res = 0;
-	T s = 1;
+	T res = 0, s = 1;
 	char ch;
-	ch = getchar();
-	while (ch < '0' || ch > '9')
-	{
-		if (ch == '-')
-		{
-			s = -1;
-		}
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		res = res * 10 + ch - '0';
-		ch = getchar();
-	}
+	while ((ch = getchar()) < '0' || ch > '9')    if (ch == '-')    s = -1;
+	while (ch >= '0' && ch <= '9')                res = res * 10 + ch - '0', ch = getchar();
 	return res * s;
 }
-template <typename T>
-void write(T x)
+template <typename T> void write(T x)
 {
-	if (x < 0)
-    {
-        putchar('-'), x = -x;
-    }
-	if (x > 9)
-	{
-		write(x / 10);
-	}
+	if (x < 0)    putchar('-'), x = -x;
+	if (x > 9)    write(x / 10);
 	putchar((x % 10) + '0');
-	return;
 }
 int main()
 {
