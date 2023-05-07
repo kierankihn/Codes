@@ -52,8 +52,5 @@ template <typename... T> void write(T... t)
 }
 int main()
 {
-	int nums[785];
-	read(5, nums);
-	write(3, nums);
 	return 0;
 }
