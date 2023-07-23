@@ -68,7 +68,7 @@ namespace output
 }
 namespace solution
 {
-    typedef long long LL;
+    typedef int LL;
     LL n;
     LL ans = 0;
     LL a, b, a0, a1, b0, b1;
@@ -80,13 +80,11 @@ namespace solution
     {
         using input::read;
         using output::write;
-        // read(n);
-        std::cin >> n;
+        read(n);
         while (n--)
         {
             ans = 0;
-            // read(a0, a1, b0, b1);
-            std::cin >> a0 >> a1 >> b0 >> b1;
+            read(a0, a1, b0, b1);
             a = a0 / a1;
             b = b1 / b0;
             for (LL i = 1; i * i <= b1; i++)
@@ -105,8 +103,7 @@ namespace solution
                     ans++;
                 }
             }
-            // write(ans);
-            std::cout << ans << std::endl;
+            write(ans);
         }
         return 0;
     }
