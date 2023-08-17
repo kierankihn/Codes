@@ -138,11 +138,8 @@ namespace solution
                     }
                     else
                     {
-                        if (cnt + node[i].p <= m)
-                        {
-                            ans++;
-                            cnt += node[i].p;
-                        }
+                        ans++;
+                        cnt += node[i].p;
                     }
                 }
             }
