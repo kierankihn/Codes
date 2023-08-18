@@ -86,7 +86,7 @@ namespace solution
         Node c;
         c.num = a.num + b.num;
         c.sum = a.sum + b.sum;
-        return c; 
+        return c;
     }
     LL n, m;
     LL a[MAXN];
@@ -109,7 +109,7 @@ namespace solution
     {
         if (l == r)
         {
-            o->num+= v;
+            o->num += v;
             o->sum += x * v;
             return;
         }
