@@ -108,12 +108,8 @@ namespace solution
                 max1 = f[e.to];
             }
         }
-        if (fa != -1)
-        {
-            cnt--;
-        }
-        f[u] += 1 + std::max(cnt - 1, 0);
-        ans = std::max(ans, max0 + max1 + std::max(0, cnt - 1 - (fa == -1)) + 1);
+        f[u] += 1 + std::max(cnt - 1 - (fa != -1), 0);
+        ans = std::max(ans, max0 + max1 + std::max(0, cnt - 2) + 1);
         return f[u];
     }
     int main()
