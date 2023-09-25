@@ -2,43 +2,122 @@
 namespace solution
 {
     typedef long long LL;
-    const int MAXN = 10 + 5;
-    LL n;
-    LL x0, m0;
-    LL a[MAXN], b[MAXN];
-    LL exgcd(LL a, LL b, LL &x, LL &y)
+    const int MAXSIZE = 3;
+    const int MOD = 1e4;
+    class Matrix
     {
-        if (b == 0)
+    private:
+        LL length, width;
+        LL m[MAXSIZE][MAXSIZE];
+
+    public:
+        Matrix(LL, LL);
+        void indentify(LL);
+        void resize(LL, LL);
+        LL *operator[](int);
+        friend Matrix operator+(Matrix, Matrix);
+        friend Matrix operator*(Matrix, Matrix);
+        friend Matrix operator%(Matrix, LL);
+        friend Matrix qpow(Matrix, LL, LL);
+    };
+    Matrix::Matrix(LL _length = 0, LL _width = 0) : length(_length), width(_width)
+    {
+        std::memset(m, 0, sizeof(m));
+    }
+    LL *Matrix::operator[](int x)
+    {
+        return m[x];
+    }
+    void Matrix::resize(LL _length, LL _width)
+    {
+        length = _length, width = _width;
+    }
+    void Matrix::indentify(LL x)
+    {
+        resize(x, x);
+        std::memset(m, 0, sizeof(m));
+        for (int i = 1; i <= x; i++)
         {
-            x = 1, y = 0;
-            return a;
+            m[i][i] = 1;
         }
-        LL d = exgcd(b, a % b, x, y);
-        LL z = x;
-        x = y, y = z - (a / b) * y;
-        return d;
+    }
+    Matrix operator+(Matrix a, Matrix b)
+    {
+        if (a.length != b.length || a.width != b.width)
+        {
+            throw;
+        }
+        Matrix res(a.length, a.width);
+        for (int i = 1; i <= res.length; i++)
+        {
+            for (int j = 1; j <= res.width; j++)
+            {
+                res[i][j] = a[i][j] + b[i][j];
+            }
+        }
+        return res;
+    }
+    Matrix operator*(Matrix a, Matrix b)
+    {
+        if (a.width != b.length)
+        {
+            throw;
+        }
+        Matrix res(a.length, b.width);
+        for (int i = 1; i <= res.length; i++)
+        {
+            for (int j = 1; j <= res.width; j++)
+            {
+                for (int k = 1; k <= a.width; k++)
+                {
+                    res[i][j] += a[i][k] * b[k][j];
+                }
+            }
+        }
+        return res;
+    }
+    Matrix operator%(Matrix a, LL b)
+    {
+        Matrix res(a.length, a.width);
+        for (int i = 1; i <= res.length; i++)
+        {
+            for (int j = 1; j <= res.width; j++)
+            {
+                res[i][j] = a[i][j] % b;
+            }
+        }
+        return res;
+    }
+    Matrix qpow(Matrix a, LL b, LL c)
+    {
+        if (a.length != a.width)
+        {
+            throw;
+        }
+        Matrix res(a.length, a.width);
+        res.indentify(a.length);
+        while (b)
+        {
+            if (b & 1)
+            {
+                res = res * a % c;
+            }
+            a = a * a % c;
+            b = b >> 1;
+        }
+        return res;
     }
     int main()
     {
-        scanf("%lld", &n);
-        for (int i = 1; i <= n; i++)
+        LL n;
+        while (scanf("%lld", &n) && n != -1)
         {
-            scanf("%lld%lld", &a[i], &b[i]);
+            Matrix ans(1, 2), p(2, 2);
+            ans[1][1] = 1, ans[1][2] = 0;
+            p[1][1] = 1, p[1][2] = 1, p[2][1] = 1, p[2][2] = 0;
+            ans = ans * qpow(p, n, MOD) % MOD;
+            printf("%lld\n", ans[1][2]);
         }
-        x0 = b[1] % a[1], m0 = a[1];
-        for (int i = 2; i <= n; i++)
-        {
-            LL x, y, d;
-            d = exgcd(m0, a[i], x, y);
-            b[i] -= x0, b[i] %= a[i], b[i] += a[i], b[i] %= a[i];
-            if (b[i] % d == 0)
-            {
-                x0 = x0 + x * m0 * (b[i] / d);
-                m0 = m0 * a[i] / d;
-                x0 %= m0, x0 += m0, x0 %= m0;
-            }
-        }
-        printf("%lld\n", x0);
         return 0;
     }
 }
