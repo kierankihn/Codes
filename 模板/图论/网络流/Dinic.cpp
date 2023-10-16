@@ -53,7 +53,7 @@ namespace solution
             return flow;
         }
         LL rest = flow;
-        for (int i = now[u]; i < g[u].size(); i++)
+        for (int i = now[u]; rest != 0 && i < g[u].size(); i++)
         {
             now[u] = i;
             Edge &e = edge[g[u][i]];
