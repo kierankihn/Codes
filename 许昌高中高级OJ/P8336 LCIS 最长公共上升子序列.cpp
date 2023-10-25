@@ -6,7 +6,7 @@ namespace solution
     int n;
     int ans = 0;
     int max[MAXN];
-    int dp[MAXN][MAXN];
+    int dp[MAXN];
     int s1[MAXN], s2[MAXN];
     int main()
     {
@@ -24,16 +24,15 @@ namespace solution
             int val = 0;
             for (int j = 1; j <= n; j++)
             {
-                dp[i][j] = std::max(dp[i][j], dp[i - 1][j]);
                 if (s1[i] == s2[j])
                 {
-                    dp[i][j] = std::max(dp[i][j], val + 1);
+                    dp[j] = std::max(dp[j], val + 1);
                 }
                 if (s2[j] < s1[i])
                 {
-                    val = std::max(val, dp[i][j]);
+                    val = std::max(val, dp[j]);
                 }
-                ans = std::max(ans, dp[i][j]);
+                ans = std::max(ans, dp[j]);
             }
         }
         printf("%d\n", ans);
