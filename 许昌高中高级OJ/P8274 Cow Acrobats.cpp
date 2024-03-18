@@ -1,0 +1,1 @@
+/root/dev/Codes/洛谷/P1842 [USACO05NOV] 奶牛玩杂技.cpp
