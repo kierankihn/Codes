@@ -1,1 +1,0 @@
-/root/dev/Codes/Codeforces/Practice/CF670C - Cinema.cpp
