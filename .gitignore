@@ -56,8 +56,5 @@ tempCodeRunnerFile.cpp
 *.dSYM
 /DEBUG
 
-# Unknown files
+# MacOS files
 .DS_Store
-
-# Contest files
-/Contest
