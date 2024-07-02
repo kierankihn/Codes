@@ -184,13 +184,11 @@ namespace solution
         }
         if (x == 0 && y != 0)
         {
-            sumy += node[y].sum, sumy %= MOD;
             modify(y, (sumx * maxp + (1 - sumx + MOD) % MOD * minp) % MOD);
             return y;
         }
         if (x != 0 && y == 0)
         {
-            sumx += node[x].sum, sumx %= MOD;
             modify(x, (sumy * maxp + (1 - sumy + MOD) % MOD * minp) % MOD);
             return x;
         }
