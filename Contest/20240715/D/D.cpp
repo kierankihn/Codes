@@ -108,7 +108,9 @@ namespace solution
     typedef std::pair<pii, int> p3i;
     typedef std::pair<pii, pii> p4i;
 
+    constexpr int V    = 1e9;
     constexpr int MAXN = 2e5 + 5;
+    constexpr int INF  = 1e9 + 5;
 
     struct CMPL
     {
@@ -137,14 +139,76 @@ namespace solution
     std::multiset<p3i, CMPL> sl;
     std::multiset<p3i, CMPR> sr;
 
+    struct Node
+    {
+        pii max;
+        int lson, rson;
+    };
+
+    int root, size;
+    Node node[MAXN * 40];
+    void pushup(int o)
+    {
+        node[o].max = std::max(node[node[o].lson].max, node[node[o].rson].max);
+    }
+    void update(int x, pii v, int &o = root, int l = -V, int r = V)
+    {
+        if (o == 0)
+        {
+            o = ++size, node[o].max = node[0].max;
+        }
+        if (l == r)
+        {
+            node[o].max = std::max(node[o].max, v);
+            return;
+        }
+
+        int mid = (l + r) >> 1;
+        if (x <= mid)
+        {
+            update(x, v, node[o].lson, l, mid);
+        }
+        else
+        {
+            update(x, v, node[o].rson, mid + 1, r);
+        }
+
+        pushup(o);
+    }
+    pii query(int ql, int qr, int o = root, int l = -V, int r = V)
+    {
+        if (o == 0)
+        {
+            return node[o].max;
+        }
+        if (ql <= l && r <= qr)
+        {
+            return node[o].max;
+        }
+
+        int mid = (l + r) >> 1;
+        if (mid >= ql && mid < qr)
+        {
+            return std::max(query(ql, qr, node[o].lson, l, mid), query(ql, qr, node[o].rson, mid + 1, r));
+        }
+        if (mid >= ql)
+        {
+            return query(ql, qr, node[o].lson, l, mid);
+        }
+        if (mid < qr)
+        {
+            return query(ql, qr, node[o].rson, mid + 1, r);
+        }
+
+        return node[0].max;
+    }
+
     int main()
     {
         read(n, m);
         for (int i = 1; i <= n; i++)
         {
             read(ad[i].first.first, ad[i].first.second), ad[i].second = i;
-
-            sl.insert(ad[i]);
         }
         for (int i = 1; i <= m; i++)
         {
@@ -158,7 +222,31 @@ namespace solution
         {
             while (j <= n && ad[j].first.first <= ch[i].first.first)
             {
-                sl.erase(ad[j]), sr.insert(ad[j]), j++;
+                sr.insert(ad[j++]);
+            }
+
+            int l = ch[i].first.first, r = ch[i].first.second, c = ch[i].second.first;
+
+            if (sr.empty() == false)
+            {
+                int maxr = std::min(r, sr.begin()->first.second);
+                if (1LL * c * (maxr - l) > ans)
+                {
+                    ans = 1LL * c * (maxr - l), pos = {sr.begin()->second, ch[i].second.second};
+                }
+            }
+        }
+
+        std::sort(ad + 1, ad + n + 1, [](const p3i &a, const p3i &b)
+                  { return a.first.second > b.first.second; });
+        std::sort(ch + 1, ch + m + 1, [](const p4i &a, const p4i &b)
+                  { return a.first.second > b.first.second; });
+
+        for (int i = 1, j = 1; i <= m; i++)
+        {
+            while (j <= n && ad[j].first.second >= ch[i].first.second)
+            {
+                sl.insert(ad[j++]);
             }
 
             int l = ch[i].first.first, r = ch[i].first.second, c = ch[i].second.first;
@@ -171,13 +259,28 @@ namespace solution
                     ans = 1LL * c * (r - minl), pos = {sl.begin()->second, ch[i].second.second};
                 }
             }
-            if (sr.empty() == false)
+        }
+
+        std::sort(ad + 1, ad + n + 1, [](const p3i &a, const p3i &b)
+                  { return a.first.second < b.first.second; });
+        std::sort(ch + 1, ch + m + 1, [](const p4i &a, const p4i &b)
+                  { return a.first.second < b.first.second; });
+
+        node[0].max = {-INF, 0};
+        for (int i = 1, j = 1; i <= m; i++)
+        {
+            while (j <= n && ad[j].first.second <= ch[i].first.second)
             {
-                int maxr = std::min(r, sr.begin()->first.second);
-                if (1LL * c * (maxr - l) > ans)
-                {
-                    ans = 1LL * c * (maxr - l), pos = {sr.begin()->second, ch[i].second.second};
-                }
+                update(ad[j].first.first, {ad[j].first.second - ad[j].first.first, ad[j].second}), j++;
+            }
+
+            int l = ch[i].first.first, r = ch[i].first.second, c = ch[i].second.first;
+
+            auto q = query(l, r);
+
+            if (1LL * c * q.first > ans)
+            {
+                ans = 1LL * c * q.first, pos = {q.second, ch[i].second.second};
             }
         }
 
