@@ -3,7 +3,7 @@ Language: Cpp
 BasedOnStyle: Microsoft
 
 # 访问说明符(public、private等)的偏移
-AccessModifierOffset: -4
+AccessModifierOffset: 0
 
 # 开括号(开圆括号、开尖括号、开方括号)后的对齐: Align, DontAlign, AlwaysBreak(总是在开括号后换行)
 AlignAfterOpenBracket: AlwaysBreak
@@ -27,19 +27,19 @@ AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
 
 # 不允许短的块放在同一行
-AllowShortBlocksOnASingleLine: false
+AllowShortBlocksOnASingleLine: true
 
 # 允许短的case标签放在同一行
-AllowShortCaseLabelsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: true
 
 # 允许短的函数放在同一行: None, InlineOnly(定义在类中), Empty(空函数), Inline(定义在类中，空函数), All
-AllowShortFunctionsOnASingleLine: None
+AllowShortFunctionsOnASingleLine: All
 
 # 允许短的if语句保持在同一行
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
 
 # 允许短的循环保持在同一行
-AllowShortLoopsOnASingleLine: false
+AllowShortLoopsOnASingleLine: true
 
 # 总是在返回类型后换行: None, All, TopLevel(顶级函数，不包括在类中的函数), 
 # AllDefinitions(所有的定义，不包括声明), TopLevelDefinitions(所有的顶级函数的定义)
@@ -70,7 +70,7 @@ ColumnLimit: 0
 CompactNamespaces: true
 
 # 构造函数的初始化列表要么都在同一行，要么都各自一行
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
 
 # 构造函数的初始化列表的缩进宽度
 ConstructorInitializerIndentWidth: 4
@@ -135,7 +135,7 @@ SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
 
 # 在尾随的评论前添加的空格数(只适用于//)
-SpacesBeforeTrailingComments: 2
+SpacesBeforeTrailingComments: 1
 
 # 在尖括号的<后和>前添加空格
 SpacesInAngles: false
@@ -160,3 +160,5 @@ TabWidth: 4
 
 # 使用tab字符: Never, ForIndentation, ForContinuationAndIndentation, Always
 UseTab: Never
+
+IndentPPDirectives: BeforeHash
